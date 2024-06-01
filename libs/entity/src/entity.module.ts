@@ -5,6 +5,14 @@ import { UserModel } from './entities/user-model.entity';
 import { EmailConfirm } from './entities/email-confirm.entity';
 import { EmailVerification } from './entities/email-verification.entity';
 import { UserPasswordAuth } from './entities/user-password-auth.entity';
+import {
+  ENV_DB_DATABASE,
+  ENV_DB_HOST,
+  ENV_DB_PASSWORD,
+  ENV_DB_USERNAME,
+} from '@lib/common/constants/env-keys.const';
+import { UserAccount } from '@lib/entity/entities/user-account.entity';
+import { Provider } from '@lib/entity/entities/provider.entity';
 
 @Module({
   imports: [
@@ -14,11 +22,18 @@ import { UserPasswordAuth } from './entities/user-password-auth.entity';
     }),
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: process.env.DB_HOST,
-      username: process.env.DB_USERNAME,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_DATABASE,
-      entities: [UserModel, EmailConfirm, EmailVerification, UserPasswordAuth],
+      host: process.env[ENV_DB_HOST],
+      username: process.env[ENV_DB_USERNAME],
+      password: process.env[ENV_DB_PASSWORD],
+      database: process.env[ENV_DB_DATABASE],
+      entities: [
+        EmailConfirm,
+        EmailVerification,
+        Provider,
+        UserAccount,
+        UserModel,
+        UserPasswordAuth,
+      ],
       synchronize: true,
       logging: true,
     }),

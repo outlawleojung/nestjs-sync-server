@@ -8,12 +8,19 @@ import { UserRepository } from '@lib/entity/repositories/user.repository';
 import { JwtService } from '@nestjs/jwt';
 import { bcryptjs } from 'bcryptjs';
 import { UserModel } from '@lib/entity';
+import { ConfigService } from '@nestjs/config';
+import {
+  ENV_ACCESS_TOKEN_EXPIRESIN,
+  ENV_JWT_SECRET,
+  ENV_REFRESH_TOKEN_EXPIRESIN,
+} from '@lib/common/constants/env-keys.const';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly userRepository: UserRepository,
     private readonly jwtService: JwtService,
+    private readonly configService: ConfigService,
   ) {}
 
   private readonly logger = new Logger(AuthService.name);
@@ -60,17 +67,17 @@ export class AuthService {
     };
 
     return this.jwtService.sign(payload, {
-      secret: process.env.SECRET_KEY,
+      secret: this.configService.get<string>(ENV_JWT_SECRET),
       expiresIn: isRefreshToken
-        ? parseInt(process.env.REFRESH_TOKEN_EXPIRESIN, 10)
-        : parseInt(process.env.ACCESS_TOKEN_EXPIRESIN, 10),
+        ? this.configService.get<number>(ENV_REFRESH_TOKEN_EXPIRESIN)
+        : this.configService.get<number>(ENV_ACCESS_TOKEN_EXPIRESIN),
     });
   }
 
   verifyToken(token: string) {
     try {
       return this.jwtService.verify(token, {
-        secret: process.env.SECRET_KEY,
+        secret: this.configService.get<string>(ENV_JWT_SECRET),
       });
     } catch (e) {
       console.log(e.toString());
@@ -87,7 +94,7 @@ export class AuthService {
   async rotateToken(token: string, isRefreshToken: boolean) {
     try {
       const decoded = this.jwtService.verify(token, {
-        secret: process.env.SECRET_KEY,
+        secret: this.configService.get<string>(ENV_JWT_SECRET),
       });
 
       if (decoded.type !== 'refresh') {

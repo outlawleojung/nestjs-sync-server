@@ -2,7 +2,11 @@ import { Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import {
   EmailConfirm,
+  EmailConfirmRepository,
   EmailVerification,
+  EmailVerificationRepository,
+  UserAccount,
+  UserAccountRepository,
   UserModel,
   UserPasswordAuth,
   UserRepository,
@@ -16,10 +20,25 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       UserModel,
       EmailConfirm,
       EmailVerification,
+      UserAccount,
       UserPasswordAuth,
     ]),
   ],
-  providers: [AuthService, JwtService, UserRepository],
-  exports: [AuthService, JwtService, UserRepository],
+  providers: [
+    AuthService,
+    JwtService,
+    UserRepository,
+    UserAccountRepository,
+    EmailConfirmRepository,
+    EmailVerificationRepository,
+  ],
+  exports: [
+    AuthService,
+    JwtService,
+    UserRepository,
+    UserAccountRepository,
+    EmailConfirmRepository,
+    EmailVerificationRepository,
+  ],
 })
 export class AuthModule {}

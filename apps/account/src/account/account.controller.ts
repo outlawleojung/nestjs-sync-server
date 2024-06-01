@@ -22,15 +22,15 @@ export class AccountController {
    * @returns accessToken
    */
 
-  @ApiOperation({ summary: '액세스 토큰 재발급 받기' })
-  @Post('token/access')
-  @UseGuards(RefreshTokenGuard)
-  async createTokenAccess(@Headers('authorization') rawToken: string) {
-    console.log('token : ', rawToken);
-    const token = this.authService.extractTokenFromHeader(rawToken, true);
-
-    const accessToken = await this.authService.rotateToken(token, false);
-
-    return { accessToken };
-  }
+  // @ApiOperation({ summary: '액세스 토큰 재발급 받기' })
+  // @Post('token/access')
+  // @UseGuards(RefreshTokenGuard)
+  // async createTokenAccess(@Headers('authorization') rawToken: string) {
+  //   console.log('token : ', rawToken);
+  //   const token = this.authService.extractTokenFromHeader(rawToken, true);
+  //
+  //   const accessToken = await this.authService.rotateToken(token, false);
+  //
+  //   return { accessToken };
+  // }
 }
