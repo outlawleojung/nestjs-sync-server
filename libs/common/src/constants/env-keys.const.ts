@@ -47,3 +47,7 @@ export const ENV_DB_DATABASE = 'DB_DATABASE';
  * 계정 서버 포트 주소
  */
 export const ENV_ACCOUNT_SERVER_PORT = 'ACCOUNT_SERVER_PORT';
+
+export const ENV_SOCKET_SERVER_PORT = 'SOCKET_SERVER_POST';
+
+export const ENV_NATS_URL = 'NATS_URL';

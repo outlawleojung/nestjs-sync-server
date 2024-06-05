@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  nats-server:
+    image: nats:latest
+    restart: always
+    ports:
+      - '4222:4222'  # NATS 클라이언트 포트
+      - '8222:8222'  # HTTP 모니터링 포트
+    command: ["-DV"]  # 디버그 모드와 상세 로그를 활성화
+    networks:
+      - nats_network
+
+networks:
+  nats_network:
+    driver: bridge

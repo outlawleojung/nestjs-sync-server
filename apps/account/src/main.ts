@@ -5,6 +5,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
 import {
+  ENV_ACCOUNT_SERVER_PORT,
   ENV_SWAGGER_PASSWORD,
   ENV_SWAGGER_USER,
 } from '@lib/common/constants/env-keys.const';
@@ -39,7 +40,7 @@ async function bootstrap() {
     }),
   );
 
-  const port: number = parseInt(process.env.ACCOUNT_SERVER_PORT, 10);
+  const port: number = parseInt(process.env[ENV_ACCOUNT_SERVER_PORT], 10);
   await app.listen(port | 3030);
   console.info(
     `Account application started on port : ${port} - ${process.env.NODE_ENV}`,

@@ -7,3 +7,5 @@ export * from './auth/guard/bearer-token.guard';
 export * from './auth/guard/basic-token.guard';
 export * from './constants/constants';
 export * from './constants/env-keys.const';
+export * from './nats/nats.service';
+export * from './nats/nats-message.handler';
